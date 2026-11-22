@@ -1,0 +1,70 @@
+{
+  "output_size": [
+    768,
+    512
+  ],
+  "camera": {
+    "w2c": [
+      [
+        0.930508,
+        0,
+        -0.366273,
+        0.68191
+      ],
+      [
+        -0.007325,
+        0.9998,
+        -0.018609,
+        0.034645
+      ],
+      [
+        0.366199,
+        0.019999,
+        0.930322,
+        0.129724
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "K": [
+      [
+        990.788342,
+        0,
+        592
+      ],
+      [
+        0,
+        990.788342,
+        400
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "width": 1184,
+    "height": 800,
+    "ratio": "source",
+    "view": {
+      "target": [
+        0,
+        0,
+        1.861756
+      ],
+      "dist": 1.861756,
+      "yaw": 0.375,
+      "pitch": -0.02,
+      "roll": 0,
+      "zoom": 1
+    }
+  },
+  "diffusion_model": "qwen_image_2.1_turbo_int8_convrot.safetensors",
+  "lora": "splat_repair_human_qwen21_e23.safetensors",
+  "steps": 9,
+  "detail_strength": 0.44
+}

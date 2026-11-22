@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- Publish a single mask detail workflow as the supported entry point.
+- Add actual matched input/render/repair comparisons and populated workflow screenshots to both READMEs.
+- Include media provenance and camera settings.
+
 ## 0.1.0
 
 Initial public release.

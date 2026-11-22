@@ -8,7 +8,7 @@ from urllib.error import URLError
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8000")
-    parser.add_argument("--workflow", type=Path, default=Path(__file__).resolve().parents[1] / "workflows/01_basic_camera_repair.json")
+    parser.add_argument("--workflow", type=Path, default=Path(__file__).resolve().parents[1] / "workflows/SHARP_Portrait_Mask_Detail.json")
     args = parser.parse_args()
     workflow = json.loads(args.workflow.read_text(encoding="utf-8-sig"))
     try:

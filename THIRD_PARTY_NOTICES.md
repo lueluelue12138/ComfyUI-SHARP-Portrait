@@ -39,4 +39,4 @@ The companion SHARP GUI project informed the subprocess environment integration.
 
 ## Media
 
-Linked upstream examples are the original author's results. Local test photographs with unestablished attribution are excluded. Model weights, upstream media and external packages are subject to their own license terms.
+Linked upstream examples are the original author’s results. README screenshots and generated comparisons document this project’s actual local tests. The input is the existing project demonstration photograph; photographic authorship is not claimed by this repository. Image provenance and sampling metadata are recorded in docs/MEDIA.md. The MIT code license does not assign rights to the original photograph. Model weights, upstream media and external packages retain their own terms.

@@ -2,9 +2,44 @@
 
 **Interactive single-photo portrait novel-view synthesis with Apple SHARP, Gaussian splatting, Qwen-Image 2.1 Turbo INT8 and Splat Repair.**
 
-[English guide](README.en.md) · [工作流](workflows) · [来源与致谢](THIRD_PARTY_NOTICES.md) · [上游对比示例](https://github.com/aaljman/splat-repair-lora#readme)
+[English guide](README.en.md) · [工作流](workflows) · [来源与致谢](THIRD_PARTY_NOTICES.md) · [实际效果](#实际效果)
 
 从一张人物照片生成高斯，在 3D 相机里拖动取景，确认后生成修复图，再根据原图或特写精修细节。各阶段可以独立操作。最新精修版采用横向大操作区，自由遮罩、参考上传、裁切和采样参数放在操作面板。
+
+
+## 实际效果
+
+同一张人物照片，先在 3D 相机中换角度，再用 Qwen + Splat Repair 修复。中间和右侧对应同一机位，原始输出为 768 × 512，点击图片可以查看原图。
+
+| 输入照片 | 新机位高斯粗图 | 新机位修复成图 |
+| :---: | :---: | :---: |
+| ![输入人物照片](docs/images/input-portrait.png) | ![同一机位的 SHARP 高斯渲染，脸部和边缘存在缺损](docs/images/novel-view-splat.png) | ![Qwen 和 Splat Repair 修补后的同一机位结果](docs/images/novel-view-repaired.png) |
+
+该示例展示可见区域和边缘缺损的补全。原图没有提供的信息由模型推测，脸型、衣服和背景仍可能变化。
+
+## 工作流操作界面
+
+横向操作区依次为原图、3D 取景、新机位对比、遮罩精修和精修前后对比。下方是采样与模型参数。点击截图查看大图。
+
+![遮罩精修版工作流完整操作区，已载入测试图片和成图](docs/images/workflow-overview.png)
+
+### 拖动取景与轨迹
+
+单击人物选旋转中心，拖动选角度，可扶正镜头、全屏查看，并在修复前释放预览资源。
+
+![3D 相机实际界面，显示高斯模型和相机操作按钮](docs/images/camera-controls.png)
+
+记录多个关键帧、设置补间数量后，可逐帧导出高斯粗图或 AI 修复图。
+
+![轨迹面板，显示两个关键帧与补间设置](docs/images/camera-trajectory.png)
+
+### 双图参考与局部精修
+
+左侧使用新机位成图，右侧保留原图细节参考，也可上传特写、裁切和涂选参考。参考采样长边在面板内独立设置。
+
+![细节精修面板，展示新机位、原图参考、遮罩、裁切与独立采样设置](docs/images/detail-controls.png)
+
+截图使用本项目实际界面，并载入同一组已保存的测试结果。示例文件和取景参数见 [媒体说明](docs/MEDIA.md)。
 
 ## 功能
 
@@ -56,24 +91,18 @@ $env:PORTRAIT_SHARP_PYTHON = "D:/ML/sharp-env/Scripts/python.exe"
 | splat_repair_human_qwen21_e23.safetensors | models/loras | [aaljman / Splat Repair](https://github.com/aaljman/splat-repair-lora) |
 | Qwen2.1 一致性无偏移_GH_V1.0.safetensors | models/loras，仅精修需要 | [孤海及其作者发布渠道](https://github.com/goohai/Goohaitools-comfyui) |
 
-模型从各自来源下载并遵循原作者条款。孤海精修 LoRA 的下载渠道可能随作者更新，请通过作者渠道获取。基础工作流不依赖该精修 LoRA。
+模型从各自来源下载并遵循原作者条款。孤海精修 LoRA 的下载渠道可能随作者更新，请通过作者渠道获取。该 LoRA 用于可选的局部精修分支。
 
 ## 工作流
 
-把 workflows 下 JSON 拖进 ComfyUI。
+下载 [SHARP_Portrait_Mask_Detail.json](workflows/SHARP_Portrait_Mask_Detail.json)，拖入 ComfyUI，即可使用建高斯、换视角、修复、遮罩精修和轨迹导出。
 
-| 文件 | 用途 | 依赖 |
-| --- | --- | --- |
-| [01_basic_camera_repair.json](workflows/01_basic_camera_repair.json) | 首次安装，建高斯、换角度、Splat Repair、轨迹导出 | 本包和当前 ComfyUI 内置节点 |
-| [02_reference_detail.json](workflows/02_reference_detail.json) | 早期调优版，矩形选区和双图参考精修 | 本包、内置节点、精修 LoRA |
-| [03_mask_detail_gh.json](workflows/03_mask_detail_gh.json) | 当前主力版，自由遮罩、参考裁切和孤海精修链 | 下方第三方包、精修 LoRA |
+需要安装本节点包，以及 [Goohaitools-comfyui](https://github.com/goohai/Goohaitools-comfyui)、[rgthree-comfy](https://github.com/rgthree/rgthree-comfy) 和 [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)。第三方包可通过 Manager 安装，模型见上表。
 
-主力版依赖 [Goohaitools-comfyui](https://github.com/goohai/Goohaitools-comfyui)、[rgthree-comfy](https://github.com/rgthree/rgthree-comfy)、[ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)，可通过 Manager 安装。保留早期版本供对照，最新精修体验集中在 03。
-
-重启后若出现红节点，检查第三方包和 ComfyUI 版本。可执行只读检查，查看缺失节点和已注册模型。
+重启后若出现红节点，检查节点包和 ComfyUI 版本。可在 ComfyUI 运行时执行只读检查，查看缺失节点和已注册模型。
 
 ~~~shell
-python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py --workflow custom_nodes/ComfyUI-SHARP-Portrait/workflows/03_mask_detail_gh.json
+python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py
 ~~~
 
 ## 操作
@@ -99,7 +128,7 @@ python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py --workflow custo
 
 本项目改编了 aaljman 的 GaussianViewer 与空洞预填充，采用 Apple SHARP 及 Splat Repair LoRA，并整合用户提供的孤海 Qwen 2.1 Turbo 调优流程。改编范围、依赖和许可证入口见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-[Splat Repair 上游对比示例](https://github.com/aaljman/splat-repair-lora#readme) 展示原作者的方法与效果，归原作者所有。此版本未上传摄影来源尚未确认的本地测试照片。
+本页效果图来自本项目的实际测试。另可参考 [Splat Repair 上游对比示例](https://github.com/aaljman/splat-repair-lora#readme)，其中结果归原作者。演示输入与生成结果的说明见 [媒体说明](docs/MEDIA.md)。
 
 代码采用 MIT，保留改编部分署名。Apple SHARP、Qwen、LoRA 与依赖分别适用原始代码和模型条款。
 
