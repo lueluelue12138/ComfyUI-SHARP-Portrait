@@ -1,0 +1,1288 @@
+{
+  "id": "a05abbeb-db8c-4ed0-9e64-0bff2d1d3118",
+  "revision": 1,
+  "last_node_id": 21,
+  "last_link_id": 28,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "title": "① 上传人物原图",
+      "pos": [
+        35,
+        110
+      ],
+      "size": [
+        310,
+        385
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "image"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1,
+            3
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "your_portrait.png",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "PortraitSharpPredict",
+      "title": "SHARP · 单图建高斯",
+      "pos": [
+        35,
+        550
+      ],
+      "size": [
+        310,
+        90
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "lens_mm",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "lens_mm"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "高斯",
+          "type": "SPLAT",
+          "links": []
+        },
+        {
+          "name": "焦距",
+          "type": "FLOAT",
+          "links": [
+            4
+          ]
+        },
+        {
+          "name": "PLY 预览",
+          "type": "FILE_3D_PLY",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PortraitSharpPredict"
+      },
+      "widgets_values": [
+        30.0
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PortraitSharpVisualCamera",
+      "title": "人物换视角 · 3D 相机",
+      "pos": [
+        385,
+        110
+      ],
+      "size": [
+        565,
+        535
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "FILE_3D_PLY",
+          "link": 2
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "name": "lens_mm",
+          "type": "FLOAT",
+          "link": 4
+        },
+        {
+          "name": "long_edge",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "long_edge"
+          }
+        },
+        {
+          "name": "camera",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "camera"
+          }
+        },
+        {
+          "name": "reference_edge",
+          "type": "INT",
+          "widget": {
+            "name": "reference_edge"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "目标相机",
+          "type": "LOAD3D_CAMERA",
+          "links": []
+        },
+        {
+          "name": "宽",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "高",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "原图参考",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "当前机位粗图",
+          "type": "IMAGE",
+          "links": [
+            9,
+            10
+          ]
+        },
+        {
+          "name": "高斯覆盖",
+          "type": "MASK",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PortraitSharpVisualCamera",
+        "portraitReleaseOnRepair": true
+      },
+      "widgets_values": [
+        1280,
+        "",
+        1536
+      ]
+    },
+    {
+      "id": 5,
+      "type": "PreviewImage",
+      "title": "当前机位粗图 · 修复前",
+      "pos": [
+        1005,
+        110
+      ],
+      "size": [
+        350,
+        390
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 6,
+      "type": "PortraitSplatFill",
+      "title": "Splat Repair · 空洞预填充",
+      "pos": [
+        385,
+        805
+      ],
+      "size": [
+        330,
+        82
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "coverage",
+          "type": "MASK",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "目标视角参考",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PortraitSplatFill"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 7,
+      "type": "UNETLoader",
+      "title": "Qwen-Image-2.1 Turbo INT8",
+      "pos": [
+        35,
+        800
+      ],
+      "size": [
+        310,
+        100
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "unet_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "weight_dtype"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_turbo_int8_convrot.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "CLIPLoader",
+      "title": "Qwen 视觉文本编码器",
+      "pos": [
+        35,
+        955
+      ],
+      "size": [
+        310,
+        130
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "name": "type",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "type"
+          }
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "device"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "VAELoader",
+      "title": "Qwen-Image-2.1 VAE",
+      "pos": [
+        35,
+        1130
+      ],
+      "size": [
+        310,
+        78
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "vae_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            17,
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoraLoaderModelOnly",
+      "title": "Splat Repair · 修补强度",
+      "pos": [
+        748,
+        800
+      ],
+      "size": [
+        340,
+        100
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        },
+        {
+          "name": "lora_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "lora_name"
+          }
+        },
+        {
+          "name": "strength_model",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "strength_model"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "splat_repair_human_qwen21_e23.safetensors",
+        1.0
+      ]
+    },
+    {
+      "id": 11,
+      "type": "QwenImage21Cache",
+      "title": "参考缓存 · INT8",
+      "pos": [
+        748,
+        955
+      ],
+      "size": [
+        340,
+        100
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 13
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "device"
+          }
+        },
+        {
+          "name": "dtype",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "dtype"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenImage21Cache"
+      },
+      "widgets_values": [
+        "auto",
+        "int8"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "TextEncodeQwenImage21",
+      "title": "③ 修补提示词 · 可直接用默认",
+      "pos": [
+        1385,
+        558
+      ],
+      "size": [
+        408,
+        180
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        },
+        {
+          "name": "images.image_1",
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "images.image_2",
+          "type": "IMAGE",
+          "link": 16
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 17
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "negative_prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "negative_prompt"
+          }
+        },
+        {
+          "name": "resolution",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "resolution"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": []
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImage21"
+      },
+      "widgets_values": [
+        "Complete the missing areas and smeared edges in image 1. Match the camera viewpoint, framing, perspective and body orientation of image 1. Use image 2 as the detail reference for the same person's face, hair, hands, clothing and accessories. Continue the background along the perspective in image 1.",
+        "",
+        0
+      ]
+    },
+    {
+      "id": 13,
+      "type": "BasicGuider",
+      "title": "Turbo 引导",
+      "pos": [
+        1120,
+        800
+      ],
+      "size": [
+        275,
+        78
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 18
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 14,
+      "type": "RandomNoise",
+      "title": "固定种子 · 同角度可复现",
+      "pos": [
+        1120,
+        925
+      ],
+      "size": [
+        275,
+        94
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise_seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "noise_seed"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "KSamplerSelect",
+      "title": "Euler 采样器",
+      "pos": [
+        1120,
+        1065
+      ],
+      "size": [
+        275,
+        74
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "ManualSigmas",
+      "title": "沿用原工作流的 9 步 Turbo",
+      "pos": [
+        1120,
+        1180
+      ],
+      "size": [
+        275,
+        76
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "sigmas",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "sigmas"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ManualSigmas"
+      },
+      "widgets_values": [
+        "1.0, 0.978453, 0.954180, 0.926626, 0.895080, 0.845148, 0.704534, 0.414568, 0.150000,0"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "SamplerCustomAdvanced",
+      "title": "Turbo · 9 步补图",
+      "pos": [
+        1435,
+        800
+      ],
+      "size": [
+        245,
+        135
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 20
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 21
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 22
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 23
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            25
+          ]
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 18,
+      "type": "VAEDecode",
+      "title": "解码修复图",
+      "pos": [
+        1435,
+        985
+      ],
+      "size": [
+        245,
+        83
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 25
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            27
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 19,
+      "type": "SplitImageWithAlpha",
+      "title": "输出 RGB",
+      "pos": [
+        1435,
+        1115
+      ],
+      "size": [
+        245,
+        75
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SplitImageWithAlpha"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "PortraitSharpSaveImage",
+      "title": "④ 修好的新视角 · 自动保存",
+      "pos": [
+        1403,
+        110
+      ],
+      "size": [
+        390,
+        390
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 28
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        },
+        {
+          "name": "output_directory",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_directory"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PortraitSharpSaveImage"
+      },
+      "widgets_values": [
+        "SHARP-Portrait/view",
+        ""
+      ]
+    },
+    {
+      "id": 21,
+      "type": "MarkdownNote",
+      "title": "怎么用",
+      "pos": [
+        1005,
+        558
+      ],
+      "size": [
+        350,
+        168
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "选图后点 **① 建高斯**。在 3D 预览拖动取景，再点 **② 修复当前机位**。修复使用同一预览的高分辨率取景。\n**输出长边**默认 1280，可调至 2560。**原图参考长边**默认 1536，可独立调至 2560，小图保留原尺寸。"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      2,
+      3,
+      0,
+      "FILE_3D_PLY"
+    ],
+    [
+      3,
+      1,
+      0,
+      3,
+      1,
+      "IMAGE"
+    ],
+    [
+      4,
+      2,
+      1,
+      3,
+      2,
+      "FLOAT"
+    ],
+    [
+      9,
+      3,
+      4,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      3,
+      4,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      3,
+      5,
+      6,
+      1,
+      "MASK"
+    ],
+    [
+      12,
+      7,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      13,
+      10,
+      0,
+      11,
+      0,
+      "MODEL"
+    ],
+    [
+      14,
+      8,
+      0,
+      12,
+      0,
+      "CLIP"
+    ],
+    [
+      15,
+      6,
+      0,
+      12,
+      1,
+      "IMAGE"
+    ],
+    [
+      16,
+      3,
+      3,
+      12,
+      2,
+      "IMAGE"
+    ],
+    [
+      17,
+      9,
+      0,
+      12,
+      3,
+      "VAE"
+    ],
+    [
+      18,
+      11,
+      0,
+      13,
+      0,
+      "MODEL"
+    ],
+    [
+      19,
+      12,
+      0,
+      13,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      14,
+      0,
+      17,
+      0,
+      "NOISE"
+    ],
+    [
+      21,
+      13,
+      0,
+      17,
+      1,
+      "GUIDER"
+    ],
+    [
+      22,
+      15,
+      0,
+      17,
+      2,
+      "SAMPLER"
+    ],
+    [
+      23,
+      16,
+      0,
+      17,
+      3,
+      "SIGMAS"
+    ],
+    [
+      24,
+      12,
+      2,
+      17,
+      4,
+      "LATENT"
+    ],
+    [
+      25,
+      17,
+      0,
+      18,
+      0,
+      "LATENT"
+    ],
+    [
+      26,
+      9,
+      0,
+      18,
+      1,
+      "VAE"
+    ],
+    [
+      27,
+      18,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      28,
+      19,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01 原图",
+      "bounding": [
+        15,
+        50,
+        350,
+        620
+      ],
+      "color": "#56778d",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02 相机与高斯粗图",
+      "bounding": [
+        367,
+        50,
+        601,
+        620
+      ],
+      "color": "#557f71",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03 提示词与结果",
+      "bounding": [
+        985,
+        50,
+        828,
+        701
+      ],
+      "color": "#8c7246",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "模型与 Turbo 采样",
+      "bounding": [
+        15,
+        752,
+        1670,
+        533
+      ],
+      "color": "#615782",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.72,
+      "offset": [
+        45,
+        80
+      ]
+    }
+  },
+  "version": 0.4
+}
