@@ -95,7 +95,12 @@ $env:PORTRAIT_SHARP_PYTHON = "D:/ML/sharp-env/Scripts/python.exe"
 
 ## 工作流
 
-下载 [SHARP_Portrait_Mask_Detail.json](workflows/SHARP_Portrait_Mask_Detail.json)，拖入 ComfyUI，即可使用建高斯、换视角、修复、遮罩精修和轨迹导出。
+选择一个工作流下载后拖入 ComfyUI。两个版本都包括建高斯、换视角、修复、遮罩精修和轨迹导出。
+
+| 版本 | 下载 | 适合的用法 |
+| --- | --- | --- |
+| 遮罩精修版 | [SHARP_Portrait_Mask_Detail.json](workflows/SHARP_Portrait_Mask_Detail.json) | 直接使用原版英文修补提示词 |
+| 遮罩精修 + 提示词优化版 | [SHARP_Portrait_Mask_Detail_Prompt_Optimize.json](workflows/SHARP_Portrait_Mask_Detail_Prompt_Optimize.json) | 相机下方开关可选择原版提示词或双图自动优化 |
 
 需要安装本节点包，以及 [Goohaitools-comfyui](https://github.com/goohai/Goohaitools-comfyui)、[rgthree-comfy](https://github.com/rgthree/rgthree-comfy) 和 [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)。第三方包可通过 Manager 安装，模型见上表。
 
@@ -104,6 +109,32 @@ $env:PORTRAIT_SHARP_PYTHON = "D:/ML/sharp-env/Scripts/python.exe"
 ~~~shell
 python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py
 ~~~
+
+### 可选的机位修补提示词优化
+
+在新增版本的相机下方打开「新机位 · 提示词优化（开/关）」，然后照常点「② 修复当前机位」。开关默认关闭，直接使用可编辑的原版英文提示词。开启后，孤海 Qwen PE 优化器读取当前机位修补参考图和原图，补写简短英文缺口与纹理描述，再追加机位、人物朝向和遮挡约束。脸部细节参考被限定为图 1 能看到脸的情况。逻辑参考 SHARP GUI 的空间重构流程。
+
+「新机位 · 实际使用的提示词」显示最终送入图像模型的完整文字。可以在「原版英文修补提示词」追加要求，在下方「机位修补 · 提示词优化设置」调整优化器指令。它默认设为 English、固定种子 666、运行后自动卸载。原版提示词中的默认脸部参考句在优化模式下由条件约束替换，手动编辑的文本会保留。
+
+![提示词优化开关、原版英文和实际使用的优化提示词](docs/images/prompt-optimization-controls.png)
+
+优化版使用相同的图像模型与 9 步采样。开关同样应用于轨迹的 AI 修复导出，每个新机位会分别优化，耗时随帧数增加。可以关闭开关来导出原版提示词的序列。
+
+更新 Goohaitools-comfyui，使用该节点的安装提示配置支持 Qwen35ChatHandler 的 llama-cpp-python。GGUF 放在 models/LLM 下。模板为优化器预选了下面三个文件，两个优化节点共享它们。图生图优化会加载 PE-I2I 和视觉模型。PE-T2I 是节点预选项，供参考为空时使用。即使关闭开关，ComfyUI 仍可能校验模型选项，缺少模型时可选择已安装的匹配文件，或使用上面的基础版本。
+
+| 预选文件 | 来源 |
+| --- | --- |
+| Qwen-Image-2.1-PE-I2I.Q5_K_S.gguf | [prithivMLmods 图生图量化模型](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-I2I-GGUF) |
+| Qwen-Image-2.1-PE-I2I.mmproj-bf16.gguf | [同一图生图模型仓库](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-I2I-GGUF/tree/main) |
+| Qwen-Image-2.1-PE-T2I.Q5_K_S.gguf | [prithivMLmods 文生图量化模型](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-T2I-GGUF) |
+
+按新增模板检查节点及模型选项。
+
+~~~shell
+python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py --workflow custom_nodes/ComfyUI-SHARP-Portrait/workflows/SHARP_Portrait_Mask_Detail_Prompt_Optimize.json
+~~~
+
+这款 human-caption LoRA 适合简短、具体的修补描述。提示词优化对质量的影响需要按素材对照，相机朝向和遮挡仍可能被生成模型改变。固定机位与生图种子后切换开关，便于比较。[Splat Repair 作者说明](https://github.com/aaljman/splat-repair-lora#caption-styles) · [Qwen PE 多图说明](https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I#multi-image-editing)
 
 ## 操作
 

@@ -22,13 +22,20 @@ def main():
     loaders = {"UNETLoader": "unet_name", "CLIPLoader": "clip_name", "VAELoader": "vae_name", "LoraLoaderModelOnly": "lora_name"}
     for node in workflow["nodes"]:
         kind = node["type"]
-        if kind not in loaders or kind not in schema:
+        if kind not in schema:
             continue
-        name = node["widgets_values"][0]
-        entry = schema[kind].get("input", {}).get("required", {}).get(loaders[kind], [])
-        available = entry[0] if entry and isinstance(entry[0], list) else None
-        if available is not None and name not in available:
-            model_missing.append(name)
+        required = schema[kind].get("input", {}).get("required", {})
+        selections = []
+        if kind in loaders:
+            selections = [(loaders[kind], node["widgets_values"][0])]
+        elif kind == "QwenImagePromptOptimizer":
+            selections = [(field, value) for field, value in zip(required, node["widgets_values"])
+                          if field in {"文生图模型", "图生图模型", "视觉模型"}]
+        for field, name in selections:
+            entry = required.get(field, [])
+            available = entry[0] if entry and isinstance(entry[0], list) else None
+            if available is not None and name not in available:
+                model_missing.append(name)
     print("Missing registered models:", ", ".join(sorted(set(model_missing))) if model_missing else "none detected")
     print("Check SHARP checkpoint and PORTRAIT_SHARP_PYTHON separately using the README.")
     return bool(missing or model_missing)

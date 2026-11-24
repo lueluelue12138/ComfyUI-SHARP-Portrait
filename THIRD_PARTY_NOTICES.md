@@ -34,8 +34,10 @@ The extended graph also uses rgthree seed and EasyUse display nodes.
 - https://github.com/rgthree/rgthree-comfy
 - https://github.com/yolain/ComfyUI-Easy-Use
 
-The companion SHARP GUI project informed the subprocess environment integration.
+The companion SHARP GUI project informed the subprocess environment integration. The optional prompt optimization workflow also reuses its spatial reconstruction instructions and the composition of short English repair descriptions with viewpoint, orientation and occlusion constraints. It runs Goohai's QwenImagePromptOptimizer and Qwen's PE-I2I model through existing ComfyUI nodes.
 - https://github.com/lueluelue12138/sharp-gui
+- https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I
+- https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-I2I-GGUF
 
 ## Media
 

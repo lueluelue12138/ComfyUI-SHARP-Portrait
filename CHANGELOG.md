@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3
+
+- Add a separate mask detail workflow with optional camera repair prompt optimization based on SHARP GUI.
+- Default to the original English prompt. The lazy switch skips the optimizer when disabled.
+- Read the target camera view and original reference, request concise English repair details and append viewpoint, orientation and occlusion constraints.
+- Display the actual prompt in the repair dependency chain, including repaired trajectory frames. Unload the optimizer after inference.
+- Document the two workflow choices, optimizer models and runtime requirements. Extend the setup checker to discover GGUF selections.
+
 ## 0.1.2
 
 - Restore the original English camera-view repair prompt with explicit references to facial, hair, hand, clothing and accessory details.

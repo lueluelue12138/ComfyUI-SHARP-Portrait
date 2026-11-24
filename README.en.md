@@ -52,7 +52,14 @@ Download exact model filenames from the [model table](README.md#模型). View sy
 
 ## Workflow
 
-Download [SHARP_Portrait_Mask_Detail.json](workflows/SHARP_Portrait_Mask_Detail.json) and drop it onto ComfyUI. Install this pack plus [Goohaitools-comfyui](https://github.com/goohai/Goohaitools-comfyui), [rgthree-comfy](https://github.com/rgthree/rgthree-comfy) and [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use). The mask detail workflow includes the full camera, repair, refinement and trajectory sequence.
+Choose a workflow and drop it onto ComfyUI. Both include the camera, repair, detail refinement and trajectory sequence.
+
+| Workflow | Download | Use |
+| --- | --- | --- |
+| Mask detail | [SHARP_Portrait_Mask_Detail.json](workflows/SHARP_Portrait_Mask_Detail.json) | Original English repair prompt |
+| Mask detail with optional prompt optimization | [SHARP_Portrait_Mask_Detail_Prompt_Optimize.json](workflows/SHARP_Portrait_Mask_Detail_Prompt_Optimize.json) | Switch between the original prompt and automatic two-image optimization below the camera |
+
+Install this pack plus [Goohaitools-comfyui](https://github.com/goohai/Goohaitools-comfyui), [rgthree-comfy](https://github.com/rgthree/rgthree-comfy) and [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use).
 
 Drop a workflow JSON onto ComfyUI. Upload a photo, build its splat, move the camera, then repair the current view. Left-click selects the orbit pivot, left-drag orbits, right-drag pans and the wheel changes distance. Roll straightens the frame.
 
@@ -67,6 +74,22 @@ The setup checker lists missing node types and model selections without executin
 ~~~shell
 python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py
 ~~~
+
+## Optional camera repair prompt optimization
+
+In the new workflow, the switch below the camera defaults to off and uses the editable original English prompt. Turn it on before repairing the current view. Following SHARP GUI's spatial reconstruction flow, the Goohai Qwen PE node reads the current-view repair reference and source photo, requests short English descriptions of gaps and continuing textures, then appends fixed camera, head orientation and occlusion constraints. Source facial details are requested only when the face is visible in image 1. The default unconditional facial-reference sentence is replaced in optimization mode. Custom prompt text is retained.
+
+The final prompt display below the switch is part of the repair chain and shows the full text used by the image model. The optimizer defaults to English, seed 666 and unloading after inference. Its instructions and model settings are in the lower prompt optimization group. The same switch applies to repaired trajectory frames, running optimization separately for each camera view and increasing export time. Image model and nine-step sampling settings follow the existing workflow.
+
+![Prompt optimization switch, editable original English and the actual optimized prompt](docs/images/prompt-optimization-controls.png)
+
+Use an updated Goohaitools-comfyui and its installation guidance for a llama-cpp-python build with Qwen35ChatHandler support. Put the GGUF files in models/LLM. The template preselects Qwen-Image-2.1-PE-I2I.Q5_K_S.gguf and Qwen-Image-2.1-PE-I2I.mmproj-bf16.gguf from the [I2I quantization repository](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-I2I-GGUF), plus Qwen-Image-2.1-PE-T2I.Q5_K_S.gguf from the [T2I quantization repository](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-T2I-GGUF). Both optimizers share the files. Two-image repair uses I2I and the vision projector. T2I is the node's fallback selection when no reference is present. ComfyUI may still validate model selections with the switch off. Select installed matching files or use the base workflow if these models are unavailable.
+
+~~~shell
+python custom_nodes/ComfyUI-SHARP-Portrait/tools/check_setup.py --workflow custom_nodes/ComfyUI-SHARP-Portrait/workflows/SHARP_Portrait_Mask_Detail_Prompt_Optimize.json
+~~~
+
+Compare the switch modes with a fixed camera and diffusion seed. The human-caption LoRA expects concise repair descriptions, and optimization quality depends on the input. Generated orientation and occlusion can still change. [Splat Repair caption guidance](https://github.com/aaljman/splat-repair-lora#caption-styles) · [Qwen PE multi-image documentation](https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I#multi-image-editing)
 
 ## Limits and attribution
 
