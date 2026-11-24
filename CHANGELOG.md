@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Restore the original English camera-view repair prompt with explicit references to facial, hair, hand, clothing and accessory details.
+
 ## 0.1.1
 
 - Publish a single mask detail workflow as the supported entry point.

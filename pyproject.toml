@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-sharp-portrait"
-version = "0.1.1"
+version = "0.1.2"
 description = "Interactive single-photo portrait novel-view synthesis with SHARP Gaussian splats, Qwen Image 2.1 Turbo repair, reference detail refinement and camera trajectory export."
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
