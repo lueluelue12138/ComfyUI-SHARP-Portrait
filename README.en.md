@@ -1,6 +1,6 @@
 # ComfyUI SHARP Portrait
 
-Interactive single-image portrait novel-view synthesis using Apple SHARP, Gaussian splats, Qwen-Image 2.1 Turbo INT8 and Splat Repair. [中文完整指南](README.md)
+Interactive single-image portrait novel-view synthesis using Apple SHARP, Gaussian splats, Qwen-Image 2.1 Turbo INT8 and Splat Repair. [中文完整指南](README.md) · [Sharp GUI workbenches](#sharp-gui)
 
 Build a splat from one photo, move the camera visually, then generate a repaired view. Masked refinement supports a second reference, uploaded close-ups, freehand masks, cropping and independent reference resolution. Additional controls include click-to-pivot, camera roll, full-screen preview, dolly zoom, keyframes and camera trajectory export.
 
@@ -14,6 +14,29 @@ The original photograph, the SHARP render at a changed camera pose, and the repa
 | ![Input portrait](docs/images/input-portrait.png) | ![Raw Gaussian render with missing edge coverage](docs/images/novel-view-splat.png) | ![Repaired image at the same viewpoint](docs/images/novel-view-repaired.png) |
 
 Unobserved details are inferred. Facial structure, clothing and background can change.
+
+<a id="sharp-gui"></a>
+
+## Sharp GUI gallery workbenches
+
+For a polished visual interface, or to submit jobs from phones, tablets and other computers on your LAN while your host handles generation, try **[Sharp GUI](https://github.com/lueluelue12138/sharp-gui)**. Its gallery workbenches cover spatial reframing, image editing and removal, and outpainting. This repository provides its original spatial reframing workflow. Click a screenshot to enlarge it.
+
+| Spatial reframing | Image editing and removal | Outpainting |
+| :---: | :---: | :---: |
+| [![Sharp GUI spatial reframing with a 3D camera and perspective controls](docs/images/sharp-gui-spatial-reframing.webp)](docs/images/sharp-gui-spatial-reframing.webp) | [![Sharp GUI image editor with a reference photo and editing instructions](docs/images/sharp-gui-image-editing.webp)](docs/images/sharp-gui-image-editing.webp) | [![Sharp GUI outpainting with draggable canvas boundaries](docs/images/sharp-gui-outpainting.webp)](docs/images/sharp-gui-outpainting.webp) |
+
+**Editing example** · A reference-guided outfit change, with the original on the left and the result on the right.
+
+[![Sharp GUI before-and-after outfit editing result](docs/images/sharp-gui-edit-result.webp)](docs/images/sharp-gui-edit-result.webp)
+
+**Installation and access**
+
+The latest release may not provide all three workbenches ready to use. To try the latest features, choose either option.
+
+- Download or clone the [latest source](https://github.com/lueluelue12138/sharp-gui/archive/refs/heads/main.zip), then build and deploy it using the [installation guide](https://github.com/lueluelue12138/sharp-gui/blob/main/docs/deployment.en.md).
+- Download the [latest complete Windows portable package](https://github.com/lueluelue12138/sharp-gui/releases/latest), then try Settings → Update Center → Latest to update to the latest main-branch code.
+
+Install the required ComfyUI custom nodes and models. If you get stuck, an AI assistant can help with the documentation and error messages.
 
 ## Workflow interface
 

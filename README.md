@@ -2,7 +2,7 @@
 
 **Interactive single-photo portrait novel-view synthesis with Apple SHARP, Gaussian splatting, Qwen-Image 2.1 Turbo INT8 and Splat Repair.**
 
-[English guide](README.en.md) · [工作流](workflows) · [来源与致谢](THIRD_PARTY_NOTICES.md) · [实际效果](#实际效果)
+[English guide](README.en.md) · [工作流](workflows) · [Sharp GUI 工作台](#sharp-gui) · [来源与致谢](THIRD_PARTY_NOTICES.md) · [实际效果](#实际效果)
 
 从一张人物照片生成高斯，在 3D 相机里拖动取景，确认后生成修复图，再根据原图或特写精修细节。各阶段可以独立操作。最新精修版采用横向大操作区，自由遮罩、参考上传、裁切和采样参数放在操作面板。
 
@@ -16,6 +16,29 @@
 | ![输入人物照片](docs/images/input-portrait.png) | ![同一机位的 SHARP 高斯渲染，脸部和边缘存在缺损](docs/images/novel-view-splat.png) | ![Qwen 和 Splat Repair 修补后的同一机位结果](docs/images/novel-view-repaired.png) |
 
 该示例展示可见区域和边缘缺损的补全。原图没有提供的信息由模型推测，脸型、衣服和背景仍可能变化。
+
+<a id="sharp-gui"></a>
+
+## Sharp GUI 图库工作台
+
+想用更直观、美观的界面操作，或从局域网内的手机、平板和其他电脑发起任务，让主机负责生成，可以试试 **[Sharp GUI](https://github.com/lueluelue12138/sharp-gui)**。它把空间重构、图片编辑与移除、扩图整合进了图库工作台，本仓库提供其中空间重构使用的原始 ComfyUI 工作流。点击截图可放大查看。
+
+| 空间重构 | 图片编辑与移除 | 扩图 |
+| :---: | :---: | :---: |
+| [![Sharp GUI 空间重构工作台，支持 3D 取景和相机调整](docs/images/sharp-gui-spatial-reframing.webp)](docs/images/sharp-gui-spatial-reframing.webp) | [![Sharp GUI 图片编辑工作台，支持参考照片和编辑描述](docs/images/sharp-gui-image-editing.webp)](docs/images/sharp-gui-image-editing.webp) | [![Sharp GUI 扩图工作台，支持拖动画布和四边调整](docs/images/sharp-gui-outpainting.webp)](docs/images/sharp-gui-outpainting.webp) |
+
+**编辑结果示例** · 根据服装参考换装，左侧是原图，右侧是成图。
+
+[![Sharp GUI 编辑结果，展示根据服装参考进行换装的前后对比](docs/images/sharp-gui-edit-result.webp)](docs/images/sharp-gui-edit-result.webp)
+
+**安装与体验**
+
+最新 Release 不保证这三个工作台直接可用，体验最新功能可选以下方式。
+
+- 下载或克隆[最新源码](https://github.com/lueluelue12138/sharp-gui/archive/refs/heads/main.zip)，按[安装文档](https://github.com/lueluelue12138/sharp-gui/blob/main/docs/deployment.md)自行构建部署。
+- 下载[最新 Windows 便携完整包](https://github.com/lueluelue12138/sharp-gui/releases/latest)，用「设置 → 更新中心 → Latest」尝试更新到最新主线。
+
+所需的 ComfyUI 节点和模型需自行安装。遇到问题，可以把文档和报错交给 AI 助手协助处理。
 
 ## 工作流操作界面
 
