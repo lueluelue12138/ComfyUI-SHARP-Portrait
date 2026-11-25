@@ -15,6 +15,26 @@ The original photograph, the SHARP render at a changed camera pose, and the repa
 
 Unobserved details are inferred. Facial structure, clothing and background can change.
 
+## Workflow interface
+
+The horizontal workspace provides the input, 3D camera, view comparison, reference refinement and final comparison, with sampling and model controls below.
+
+![Actual mask detail workflow with recorded test outputs loaded](docs/images/workflow-overview.png)
+
+### Camera and trajectory
+
+![Interactive Gaussian camera with orbit, roll and preview release controls](docs/images/camera-controls.png)
+
+![Camera keyframes and interpolated image sequence export](docs/images/camera-trajectory.png)
+
+### Masked reference refinement
+
+Paint the target on the left and upload, crop or mask the reference on the right. Reference sampling resolution is adjustable in the same panel.
+
+![Reference refinement panel with crop and sampling controls](docs/images/detail-controls.png)
+
+Screenshots show the actual interface populated with saved test results. [Media provenance and settings](docs/MEDIA.md).
+
 <a id="sharp-gui"></a>
 
 ## Sharp GUI gallery workbenches
@@ -37,26 +57,6 @@ The latest release may not provide all three workbenches ready to use. To try th
 - Download the [latest complete Windows portable package](https://github.com/lueluelue12138/sharp-gui/releases/latest), then try Settings → Update Center → Latest to update to the latest main-branch code.
 
 Install the required ComfyUI custom nodes and models. If you get stuck, an AI assistant can help with the documentation and error messages.
-
-## Workflow interface
-
-The horizontal workspace provides the input, 3D camera, view comparison, reference refinement and final comparison, with sampling and model controls below.
-
-![Actual mask detail workflow with recorded test outputs loaded](docs/images/workflow-overview.png)
-
-### Camera and trajectory
-
-![Interactive Gaussian camera with orbit, roll and preview release controls](docs/images/camera-controls.png)
-
-![Camera keyframes and interpolated image sequence export](docs/images/camera-trajectory.png)
-
-### Masked reference refinement
-
-Paint the target on the left and upload, crop or mask the reference on the right. Reference sampling resolution is adjustable in the same panel.
-
-![Reference refinement panel with crop and sampling controls](docs/images/detail-controls.png)
-
-Screenshots show the actual interface populated with saved test results. [Media provenance and settings](docs/MEDIA.md).
 
 ## Install
 

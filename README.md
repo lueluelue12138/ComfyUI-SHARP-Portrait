@@ -17,29 +17,6 @@
 
 该示例展示可见区域和边缘缺损的补全。原图没有提供的信息由模型推测，脸型、衣服和背景仍可能变化。
 
-<a id="sharp-gui"></a>
-
-## Sharp GUI 图库工作台
-
-想用更直观、美观的界面操作，或从局域网内的手机、平板和其他电脑发起任务，让主机负责生成，可以试试 **[Sharp GUI](https://github.com/lueluelue12138/sharp-gui)**。它把空间重构、图片编辑与移除、扩图整合进了图库工作台，本仓库提供其中空间重构使用的原始 ComfyUI 工作流。点击截图可放大查看。
-
-| 空间重构 | 图片编辑与移除 | 扩图 |
-| :---: | :---: | :---: |
-| [![Sharp GUI 空间重构工作台，支持 3D 取景和相机调整](docs/images/sharp-gui-spatial-reframing.webp)](docs/images/sharp-gui-spatial-reframing.webp) | [![Sharp GUI 图片编辑工作台，支持参考照片和编辑描述](docs/images/sharp-gui-image-editing.webp)](docs/images/sharp-gui-image-editing.webp) | [![Sharp GUI 扩图工作台，支持拖动画布和四边调整](docs/images/sharp-gui-outpainting.webp)](docs/images/sharp-gui-outpainting.webp) |
-
-**编辑结果示例** · 根据服装参考换装，左侧是原图，右侧是成图。
-
-[![Sharp GUI 编辑结果，展示根据服装参考进行换装的前后对比](docs/images/sharp-gui-edit-result.webp)](docs/images/sharp-gui-edit-result.webp)
-
-**安装与体验**
-
-最新 Release 不保证这三个工作台直接可用，体验最新功能可选以下方式。
-
-- 下载或克隆[最新源码](https://github.com/lueluelue12138/sharp-gui/archive/refs/heads/main.zip)，按[安装文档](https://github.com/lueluelue12138/sharp-gui/blob/main/docs/deployment.md)自行构建部署。
-- 下载[最新 Windows 便携完整包](https://github.com/lueluelue12138/sharp-gui/releases/latest)，用「设置 → 更新中心 → Latest」尝试更新到最新主线。
-
-所需的 ComfyUI 节点和模型需自行安装。遇到问题，可以把文档和报错交给 AI 助手协助处理。
-
 ## 工作流操作界面
 
 横向操作区依次为原图、3D 取景、新机位对比、遮罩精修和精修前后对比。下方是采样与模型参数。点击截图查看大图。
@@ -63,6 +40,29 @@
 ![细节精修面板，展示新机位、原图参考、遮罩、裁切与独立采样设置](docs/images/detail-controls.png)
 
 截图使用本项目实际界面，并载入同一组已保存的测试结果。示例文件和取景参数见 [媒体说明](docs/MEDIA.md)。
+
+<a id="sharp-gui"></a>
+
+## Sharp GUI 图库工作台
+
+想用更直观、美观的界面操作，或从局域网内的手机、平板和其他电脑发起任务，让主机负责生成，可以试试 **[Sharp GUI](https://github.com/lueluelue12138/sharp-gui)**。它把空间重构、图片编辑与移除、扩图整合进了图库工作台，本仓库提供其中空间重构使用的原始 ComfyUI 工作流。点击截图可放大查看。
+
+| 空间重构 | 图片编辑与移除 | 扩图 |
+| :---: | :---: | :---: |
+| [![Sharp GUI 空间重构工作台，支持 3D 取景和相机调整](docs/images/sharp-gui-spatial-reframing.webp)](docs/images/sharp-gui-spatial-reframing.webp) | [![Sharp GUI 图片编辑工作台，支持参考照片和编辑描述](docs/images/sharp-gui-image-editing.webp)](docs/images/sharp-gui-image-editing.webp) | [![Sharp GUI 扩图工作台，支持拖动画布和四边调整](docs/images/sharp-gui-outpainting.webp)](docs/images/sharp-gui-outpainting.webp) |
+
+**编辑结果示例** · 根据服装参考换装，左侧是原图，右侧是成图。
+
+[![Sharp GUI 编辑结果，展示根据服装参考进行换装的前后对比](docs/images/sharp-gui-edit-result.webp)](docs/images/sharp-gui-edit-result.webp)
+
+**安装与体验**
+
+最新 Release 不保证这三个工作台直接可用，体验最新功能可选以下方式。
+
+- 下载或克隆[最新源码](https://github.com/lueluelue12138/sharp-gui/archive/refs/heads/main.zip)，按[安装文档](https://github.com/lueluelue12138/sharp-gui/blob/main/docs/deployment.md)自行构建部署。
+- 下载[最新 Windows 便携完整包](https://github.com/lueluelue12138/sharp-gui/releases/latest)，用「设置 → 更新中心 → Latest」尝试更新到最新主线。
+
+所需的 ComfyUI 节点和模型需自行安装。遇到问题，可以把文档和报错交给 AI 助手协助处理。
 
 ## 功能
 
